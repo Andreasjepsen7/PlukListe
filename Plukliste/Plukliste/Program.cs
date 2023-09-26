@@ -31,10 +31,10 @@ namespace Plukliste
                     if (index == -1) index = 0;
 
                     DisplayPlukliste(index);
-                    DisplayOptions(); 
+                    DisplayOptions();
 
                     readKey = Console.ReadKey().KeyChar;
-                    if (readKey >= 'a') readKey -= (char)('a' - 'A'); // HACK: To upper
+                    if (readKey >= 'a') readKey -= (char)('a' - 'A'); // Convert to uppercase
                     Console.Clear();
 
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -55,7 +55,7 @@ namespace Plukliste
                             CompletePlukliste(ref index);
                             break;
                     }
-                    Console.ForegroundColor = standardColor; 
+                    Console.ForegroundColor = standardColor;
                 }
             }
         }
@@ -70,15 +70,37 @@ namespace Plukliste
                 Console.ReadLine();
                 Environment.Exit(0);
             }
-            return Directory.EnumerateFiles("export").ToList();
+
+            var xmlFiles = Directory.EnumerateFiles("export", "*.xml").ToList();
+            var csvFiles = Directory.EnumerateFiles("export", "*.csv").ToList();
+
+            // Combine XML and CSV file lists
+            var combinedFiles = new List<string>();
+            combinedFiles.AddRange(xmlFiles);
+            combinedFiles.AddRange(csvFiles);
+
+            return combinedFiles;
         }
+
+
 
         static void DisplayPlukliste(int index)
         {
             Console.WriteLine($"Plukliste {index + 1} af {files.Count}");
             Console.WriteLine($"\nfile: {files[index]}");
 
-            using FileStream file = File.OpenRead(files[index]);
+            // Determine file type and call appropriate function to display content
+            if (files[index].EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+                DisplayXmlContent(files[index]);
+            else if (files[index].EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
+                DisplayCsvContent(files[index]);
+            else
+                Console.WriteLine("Unsupported file type.");
+        }
+
+        static void DisplayXmlContent(string filePath)
+        {
+            using FileStream file = File.OpenRead(filePath);
             var xmlSerializer = new XmlSerializer(typeof(Pluklist));
             var plukliste = (Pluklist?)xmlSerializer.Deserialize(file);
 
@@ -94,6 +116,41 @@ namespace Plukliste
                 }
             }
         }
+
+        static void DisplayCsvContent(string filePath)
+        {
+            // Read all lines from the CSV file
+            string[] lines = File.ReadAllLines(filePath);
+
+            // Assuming the CSV has a header and data
+            if (lines.Length < 2)
+            {
+                Console.WriteLine("Invalid CSV format: At least header and one data line expected.");
+                return;
+            }
+
+            // Split the header and data into columns
+            string[] header = lines[0].Split(';');
+            List<string[]> data = new List<string[]>();
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                string[] columns = lines[i].Split(';');
+                data.Add(columns);
+            }
+
+            // Display header
+            Console.WriteLine("CSV Header:");
+            Console.WriteLine(string.Join("; ", header));
+
+            // Display data
+            Console.WriteLine("CSV Data:");
+            foreach (var row in data)
+            {
+                Console.WriteLine(string.Join("; ", row));
+            }
+        }
+        
 
         static void DisplayOptions()
         {
@@ -129,7 +186,6 @@ namespace Plukliste
             Console.WriteLine("enindlæs pluksedler");
         }
 
-
         static void CompletePlukliste(ref int index)
         {
             var fileWithoutPath = files[index].Substring(files[index].LastIndexOf('\\'));
@@ -139,7 +195,7 @@ namespace Plukliste
             }
             catch (IOException e)
             {
-                if( e.HResult == -2147024713) //En fil, som allerede findes, kan ikke oprettes
+                if (e.HResult == -2147024713) // A file that already exists cannot be created
                     File.Delete(files[index]);
             }
             Console.WriteLine($"Plukseddel {files[index]} afsluttet.");

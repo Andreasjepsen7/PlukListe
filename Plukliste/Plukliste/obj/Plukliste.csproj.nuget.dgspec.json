@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HFGF\\Source\\Repos\\Plukliste\\Plukliste\\Plukliste.csproj": {}
+    "C:\\Users\\Andreas\\Source\\Repos\\PlukListen\\Plukliste\\Plukliste\\Plukliste.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HFGF\\Source\\Repos\\Plukliste\\Plukliste\\Plukliste.csproj": {
+    "C:\\Users\\Andreas\\Source\\Repos\\PlukListen\\Plukliste\\Plukliste\\Plukliste.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HFGF\\Source\\Repos\\Plukliste\\Plukliste\\Plukliste.csproj",
+        "projectUniqueName": "C:\\Users\\Andreas\\Source\\Repos\\PlukListen\\Plukliste\\Plukliste\\Plukliste.csproj",
         "projectName": "Plukliste",
-        "projectPath": "C:\\Users\\HFGF\\Source\\Repos\\Plukliste\\Plukliste\\Plukliste.csproj",
-        "packagesPath": "C:\\Users\\HFGF\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HFGF\\Source\\Repos\\Plukliste\\Plukliste\\obj\\",
+        "projectPath": "C:\\Users\\Andreas\\Source\\Repos\\PlukListen\\Plukliste\\Plukliste\\Plukliste.csproj",
+        "packagesPath": "C:\\Users\\Andreas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Andreas\\Source\\Repos\\PlukListen\\Plukliste\\Plukliste\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\HFGF\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Andreas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -59,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
